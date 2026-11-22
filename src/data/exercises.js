@@ -11,23 +11,23 @@ const STAND = { upperArmL: [0, 0, -7], forearmL: [-7, 0, 0], thighL: [0, 0, -2],
 const merge = (...o) => Object.assign({}, ...o)
 
 export const DAYS = [
-  { id: 'chest', name: '胸', en: 'CHEST', sets: '12–16 组', day: '周一', accent: '#C6FF3D' },
+  { id: 'chest', name: '胸', en: 'CHEST', sets: '13 + 面拉 2', day: '周一', accent: '#C6FF3D' },
   { id: 'back', name: '背', en: 'BACK', sets: '14–18 组', day: '周二', accent: '#7CD4FF' },
   { id: 'rest1', name: '休', en: 'REST', sets: '走路 / 恢复', day: '周三', accent: '#5A5F66' },
-  { id: 'shoulder', name: '肩', en: 'SHOULDER', sets: '12–16 组', day: '周四', accent: '#FFB547' },
-  { id: 'leg', name: '腿', en: 'LEGS', sets: '14–18 组', day: '周五', accent: '#FF6B6B' },
-  { id: 'arm', name: '手臂', en: 'ARMS+CORE', sets: '14–20 组', day: '周六', accent: '#B78CFF' },
+  { id: 'shoulder', name: '肩', en: 'SHOULDER', sets: '14 组', day: '周四', accent: '#FFB547' },
+  { id: 'leg', name: '腿', en: 'LEGS', sets: '18–22 组', day: '周五', accent: '#FF6B6B' },
+  { id: 'arm', name: '手臂', en: 'ARMS+BACK', sets: '手臂 12–14 + 背 2 + 核心', day: '周六', accent: '#B78CFF' },
   { id: 'rest2', name: '休', en: 'REST', sets: '备餐 / 恢复', day: '周日', accent: '#5A5F66' },
 ]
 
 export const EXERCISES = [
   /* ================= 胸 ================= */
   {
-    id: 'bench-press', day: 'chest', name: '杠铃卧推', en: 'BARBELL BENCH PRESS',
+    id: 'bench-press', day: 'chest', seq: 1, name: '杠铃卧推', en: 'BARBELL BENCH PRESS',
     muscles: ['pec', 'tricep'], assist: '三角肌前束',
     sets: '3 × 6–8', rir: 'RIR 2', rest: '3 分钟',
     prop: 'barbell', bench: true, ground: { by: 'feet', y: 0.015 },
-    cues: ['肩胛后缩下沉，胸挺起把杠「接住」', '杠铃触胸不弹，下放 3 秒', '手腕中立，别让杠往头上跑'],
+    cues: ['肩胛后夹下沉，头、上背、臀贴凳，屁股不许离凳', '杠落到乳头连线或胸骨下端，肘与身体 45–60°，小臂垂直', '轻触不反弹，推起向上并略向头，锁在肩膀正上方'],
     cam: [2.3, 1.35, 1.55], target: [0, 0.62, 0.05],
     poses: [
       merge({ pelvis: [-90, 0, 0], pelvisPos: [0, -0.36, 0], torso: [0, 0, 0] },
@@ -39,11 +39,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'incline-db-press', day: 'chest', name: '哑铃上斜卧推', en: 'INCLINE DB PRESS',
+    id: 'incline-db-press', day: 'chest', seq: 2, name: '哑铃上斜卧推', en: 'INCLINE DB PRESS',
     muscles: ['pec', 'tricep'], assist: '三角肌前束',
     sets: '3 × 8–10', rir: 'RIR 2', rest: '2 分钟',
     prop: 'dumbbell', bench: 'incline', ground: { by: 'feet', y: 0.015 },
-    cues: ['凳角 30° 左右，太高会变成推肩', '肘部约 45°，不要完全外展', '顶峰不锁死，保持胸的张力'],
+    cues: ['靠背 30–45°，超过 60° 就变成推肩', '哑铃在上胸两侧，肘与身体 45–60°，别张到 90°', '下放约 2 秒到肘略低于凳面，顶端两只不相碰'],
     cam: [2.4, 1.4, 1.7], target: [0, 0.8, 0],
     poses: [
       merge({ pelvis: [-58, 0, 0], pelvisPos: [0, -0.34, -0.05], torso: [-12, 0, 0] },
@@ -55,11 +55,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'dips', day: 'chest', name: '双杠臂屈伸', en: 'CHEST DIPS',
+    id: 'dips', day: 'chest', seq: 3, name: '双杠臂屈伸', en: 'CHEST DIPS',
     muscles: ['pec', 'tricep'], assist: '三角肌前束',
     sets: '3 × 8–12', rir: 'RIR 2', rest: '2 分钟',
     prop: 'bars', ground: { by: 'hands', y: 1.0 },
-    cues: ['身体前倾 30°，胸才有感觉', '下到肩略低于肘就停，别硬撑到底', '肩前侧痛就换成器械推胸'],
+    cues: ['身体前倾 20–30°，肩下沉远离耳朵', '下到肩膀与肘同高就停，再低会挤肩', '肘直直往后，不往两侧张；做不到 8 个就换辅助'],
     cam: [2.4, 1.35, 2.3], target: [0, 1.15, 0],
     poses: [
       merge(STAND, { torso: [26, 0, 0], upperArmL: [-32, 0, -34], forearmL: [-64, 0, 0] },
@@ -69,11 +69,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'cable-fly', day: 'chest', name: '绳索夹胸', en: 'CABLE FLYE',
+    id: 'cable-fly', day: 'chest', seq: 4, name: '绳索夹胸', en: 'CABLE FLYE',
     muscles: ['pec'], assist: '三角肌前束',
     sets: '3 × 12–15', rir: 'RIR 1', rest: '60–90 秒',
     prop: 'none',
-    cues: ['肘保持微屈固定，像「抱大树」', '在胸前合拢时停 1 秒，挤住胸', '重量轻一点，感受比数字重要'],
+    cues: ['滑轮略高于肩，肘微屈约 15° 全程固定', '合拢 1 秒、顶峰夹 1 秒、打开 2–3 秒', '别用肘一屈一伸，也别用体重往下压'],
     cam: [0.2, 1.25, 2.6], target: [0, 1.05, 0],
     poses: [
       merge(STAND, { torso: [6, 0, 0], upperArmL: [-12, 0, -62], forearmL: [-24, 0, 0] }),
@@ -81,11 +81,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'pushup', day: 'chest', name: '俯卧撑', en: 'PUSH-UP',
+    id: 'pushup', day: 'chest', seq: 5, name: '俯卧撑', en: 'PUSH-UP',
     muscles: ['pec', 'tricep'], assist: '核心、三角肌前束',
-    sets: '2 × 12–15', rir: 'RIR 1', rest: '60 秒',
+    sets: '1 × 12–15', rir: 'RIR 1', rest: '60 秒',
     prop: 'none', floor: true, ground: { by: 'hands', y: 0.015 },
-    cues: ['身体像一块板，屁股别塌也别撅', '胸口离地一拳，手肘 45°', '做不动就跪姿，别塌腰硬撑'],
+    cues: ['手比肩略宽，掌根在乳头线，不是窄距', '肘与身体约 45°，胸口离地约一拳，不抬头', '头到脚跟一条直线，做不动就撑高或换器械推胸'],
     cam: [2.3, 1.05, 2.0], target: [0, 0.42, 0.05],
     poses: [
       merge({ pelvis: [100, 0, 0], pelvisPos: [0, -0.42, 0], torso: [-6, 0, 0] },
@@ -96,14 +96,26 @@ export const EXERCISES = [
         { thighL: [-20, 0, -4], shinL: [-25, 0, 0], footL: [-60, 0, 0] }),
     ],
   },
+  {
+    id: 'face-pull-chest', day: 'chest', seq: 6, media: 'face-pull', name: '面拉', en: 'FACE PULL',
+    muscles: ['rearDelt', 'trap'], assist: '菱形肌、肩袖',
+    sets: '2 × 15', rir: 'RIR 1', rest: '60 秒',
+    prop: 'none',
+    cues: ['滑轮调到额头高度，正握、手背朝上', '肘与肩同高，拉到太阳穴两侧，大臂外旋', '这是胸日的拉类平衡，重量轻、不后仰、不耸肩'],
+    cam: [0.4, 1.35, 2.6], target: [0, 1.2, 0],
+    poses: [
+      merge(STAND, { torso: [4, 0, 0], upperArmL: [-96, 0, -18], forearmL: [-8, 0, 0] }),
+      merge(STAND, { torso: [4, 0, 0], upperArmL: [-118, 0, -58], forearmL: [-96, 0, 0] }),
+    ],
+  },
 
   /* ================= 背 ================= */
   {
-    id: 'lat-pulldown', day: 'back', name: '高位下拉', en: 'LAT PULLDOWN',
+    id: 'lat-pulldown', day: 'back', seq: 1, name: '高位下拉', en: 'LAT PULLDOWN',
     muscles: ['lat', 'bicep'], assist: '中下斜方、大圆肌',
     sets: '3 × 8–10', rir: 'RIR 2', rest: '2–3 分钟',
     prop: 'none',
-    cues: ['对握 V 把最舒服，主项固定别乱换', '先沉肩，想像肘往肋下插', '拉到下巴前就够了，不要颈后'],
+    cues: ['有三角把就对握，没有就正握长杆、与肩同宽', '先沉肩，再把肘往身体两侧带，上身只后仰 10–15°', '杆到锁骨附近就停，2–3 秒放回，不做颈后'],
     cam: [1.6, 1.5, 2.7], target: [0, 1.15, 0],
     poses: [
       merge(STAND, { torso: [-4, 0, 0], upperArmL: [-168, 0, -16], forearmL: [-14, 0, 0] },
@@ -113,11 +125,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'chest-supported-row', day: 'back', name: '胸托 T 杠划船', en: 'CHEST-SUPPORTED ROW',
+    id: 'chest-supported-row', day: 'back', seq: 2, name: '斜凳胸托哑铃划船', en: 'CHEST-SUPPORTED ROW',
     muscles: ['lat', 'trap'], assist: '菱形肌、三角肌后束、肱二头',
     sets: '3 × 8–10', rir: 'RIR 2', rest: '2–3 分钟',
     prop: 'none', bench: 'incline', ground: { by: 'feet', y: 0.015 },
-    cues: ['胸口贴着垫子，腰不用发力', '肘往后拉、肩胛夹紧，停 1 秒', '腰不好的首选，替掉杠铃划船'],
+    cues: ['上斜凳 30–45°，胸口整组贴住靠背', '手心相对，肘贴身体往下肋拉，不往两侧张开', '拉到肘略过躯干停 1 秒，2–3 秒放回'],
     cam: [2.2, 1.5, 1.9], target: [0, 0.95, 0],
     poses: [
       merge({ pelvis: [-52, 0, 0], pelvisPos: [0, -0.32, -0.04], torso: [-6, 0, 0] },
@@ -129,11 +141,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'seated-cable-row', day: 'back', name: '坐姿绳索划船', en: 'SEATED CABLE ROW',
+    id: 'seated-cable-row', day: 'back', seq: 3, name: '坐姿绳索划船', en: 'SEATED CABLE ROW',
     muscles: ['lat', 'trap'], assist: '菱形肌、肱二头',
     sets: '3 × 10–12', rir: 'RIR 2', rest: '2 分钟',
     prop: 'none',
-    cues: ['躯干别前后甩，靠背角稳', '拉到肚脐上方，肩胛后缩', '回放要慢，让背阔拉长'],
+    cues: ['膝明显弯曲，坐在坐骨上，躯干基本竖直', '先收肩胛，肘贴身拉到上腹、肋骨下方', '用 2 秒送回，上身不前后甩，不拉到胸口'],
     cam: [2.3, 1.4, 1.9], target: [0, 0.95, 0],
     poses: [
       merge(STAND, { torso: [8, 0, 0], upperArmL: [-84, 0, -14], forearmL: [-10, 0, 0] },
@@ -143,11 +155,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'single-arm-row', day: 'back', name: '单臂哑铃划船', en: 'ONE-ARM DB ROW',
+    id: 'single-arm-row', day: 'back', seq: 4, name: '单臂哑铃划船', en: 'ONE-ARM DB ROW',
     muscles: ['lat', 'trap'], assist: '菱形肌、肱二头',
     sets: '2 × 10–12 / 侧', rir: 'RIR 2', rest: '90 秒',
     prop: 'dumbbellR',
-    cues: ['单手撑凳，背保持平', '肘贴着身体往后拉，别耸肩', '两侧各做，弱的那边先做'],
+    cues: ['支撑手在肩正下方，背从髋到头一条直线', '肘贴身体往髋部拉，哑铃停在下肋旁', '不转体、不耸肩，底部手臂完全伸直'],
     cam: [2.4, 1.35, 1.8], target: [0, 0.95, 0],
     poses: [
       merge({ torso: [56, 0, 0] },
@@ -161,11 +173,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'straight-arm-pulldown', day: 'back', name: '直臂下压', en: 'STRAIGHT-ARM PULLDOWN',
+    id: 'straight-arm-pulldown', day: 'back', seq: 5, name: '直臂下压', en: 'STRAIGHT-ARM PULLDOWN',
     muscles: ['lat'], assist: '大圆肌、肱三头长头',
     sets: '2 × 12–15', rir: 'RIR 1', rest: '60 秒',
     prop: 'none',
-    cues: ['手臂基本伸直，只动肩关节', '背阔发力把杆压到大腿', '这是背部发力的「试金石」'],
+    cues: ['上身前倾 30–45°，臀和上身全程不动', '肘微屈固定，只靠肩关节把杆压到大腿前', '肘一弯一伸就变成三头下压，先减重量'],
     cam: [0.3, 1.3, 2.6], target: [0, 1.1, 0],
     poses: [
       merge(STAND, { torso: [10, 0, 0], upperArmL: [-112, 0, -14], forearmL: [-6, 0, 0] }),
@@ -173,11 +185,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'face-pull', day: 'back', name: '面拉', en: 'FACE PULL',
+    id: 'face-pull', day: 'back', seq: 6, name: '面拉', en: 'FACE PULL',
     muscles: ['rearDelt', 'trap'], assist: '菱形肌、肩袖',
-    sets: '2–3 × 15', rir: 'RIR 1', rest: '60 秒',
+    sets: '2 × 15', rir: 'RIR 1', rest: '60 秒',
     prop: 'none',
-    cues: ['拉向额头，双手往外分开', '肘高于手，像在「拔剑」', '重量轻，练的是后束不是斜方'],
+    cues: ['滑轮在额头高度，正握、手背朝上', '绳子瞄准鼻梁，肘与肩同高，拉到太阳穴两侧', '不拉到胸口，不后仰，不耸肩'],
     cam: [0.4, 1.35, 2.6], target: [0, 1.2, 0],
     poses: [
       merge(STAND, { torso: [4, 0, 0], upperArmL: [-96, 0, -18], forearmL: [-8, 0, 0] }),
@@ -187,11 +199,11 @@ export const EXERCISES = [
 
   /* ================= 肩 ================= */
   {
-    id: 'shoulder-press', day: 'shoulder', name: '哑铃肩推', en: 'DB SHOULDER PRESS',
+    id: 'shoulder-press', day: 'shoulder', seq: 1, name: '史密斯 / 哑铃肩推', en: 'SHOULDER PRESS',
     muscles: ['delt', 'tricep'], assist: '上胸、斜方',
     sets: '3 × 6–10', rir: 'RIR 2', rest: '2–3 分钟',
     prop: 'dumbbell',
-    cues: ['核心收紧，肋骨别外翻', '推到头顶正上方，不往前送', '下放到耳侧就够，别砸到底'],
+    cues: ['安全挡板略高于头顶，背贴靠垫，腰不拱', '下放到下巴或嘴的高度就停，不降到胸口', '肘略在身体前方，手腕立住，顶端不锁死'],
     cam: [2.0, 1.5, 2.2], target: [0, 1.25, 0],
     poses: [
       merge(STAND, { upperArmL: [-30, 0, -68], forearmL: [-96, 0, 0] }),
@@ -199,11 +211,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'lateral-raise', day: 'shoulder', name: '哑铃侧平举', en: 'LATERAL RAISE',
+    id: 'lateral-raise', day: 'shoulder', seq: 2, name: '哑铃侧平举', en: 'LATERAL RAISE',
     muscles: ['delt'], assist: '斜方、冈上肌',
     sets: '4 × 12–15', rir: 'RIR 1', rest: '60 秒',
     prop: 'dumbbell',
-    cues: ['「倒水」角度，小拇指略高', '抬到肩高就停，别耸肩', '小重量多次数，别甩'],
+    cues: ['用肘带动，小指略高于拇指，手腕不折', '抬到与地面平行就停，不超肩、不耸肩', '3–5kg 就够，放下用 2–3 秒'],
     cam: [0.3, 1.45, 2.5], target: [0, 1.25, 0],
     poses: [
       merge(STAND, { upperArmL: [0, 0, -14], forearmL: [-14, 0, 0] }),
@@ -211,11 +223,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'reverse-fly', day: 'shoulder', name: '反向飞鸟', en: 'REVERSE FLYE',
+    id: 'reverse-fly', day: 'shoulder', seq: 4, name: '反向飞鸟', en: 'REVERSE FLYE',
     muscles: ['rearDelt'], assist: '菱形肌、中斜方',
-    sets: '3 × 12–15', rir: 'RIR 1', rest: '60 秒',
+    sets: '4 × 12–15', rir: 'RIR 1', rest: '60 秒',
     prop: 'dumbbell',
-    cues: ['俯身或胸托，背别拱', '手臂微屈固定，往外打开', '想像肩胛骨往中间夹'],
+    cues: ['胸口贴垫，座椅调到把手与肩同高', '肘微屈固定，打开到 T 字就停，不越过肩线', '想着把手推开，不是弯肘往身上拉'],
     cam: [2.2, 1.5, 1.9], target: [0, 1.0, 0],
     poses: [
       merge({ torso: [62, 0, 0] }, { upperArmL: [-88, 0, -8], forearmL: [-22, 0, 0] },
@@ -225,25 +237,25 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'front-raise', day: 'shoulder', name: '哑铃前平举', en: 'FRONT RAISE',
-    muscles: ['delt'], assist: '上胸',
-    sets: '2 × 12–15', rir: 'RIR 1', rest: '60 秒',
-    prop: 'dumbbell',
-    cues: ['抬到肩高，掌心向下', '别用腰甩起来', '前束在推类里已经练到，量不用大'],
-    cam: [2.0, 1.4, 2.2], target: [0, 1.2, 0],
+    id: 'face-pull-shoulder', day: 'shoulder', seq: 3, media: 'face-pull', name: '面拉', en: 'FACE PULL',
+    muscles: ['rearDelt', 'trap'], assist: '菱形肌、肩袖',
+    sets: '3 × 15', rir: 'RIR 1', rest: '60 秒',
+    prop: 'none',
+    cues: ['滑轮在额头高度，正握、手背朝上', '肘与肩同高，拉到太阳穴两侧，大臂外旋', '不拉到胸口、不后仰、不耸肩'],
+    cam: [0.4, 1.35, 2.6], target: [0, 1.2, 0],
     poses: [
-      merge(STAND, { upperArmL: [0, 0, -10], forearmL: [-10, 0, 0] }),
-      merge(STAND, { upperArmL: [-92, 0, -8], forearmL: [-8, 0, 0] }),
+      merge(STAND, { torso: [4, 0, 0], upperArmL: [-96, 0, -18], forearmL: [-8, 0, 0] }),
+      merge(STAND, { torso: [4, 0, 0], upperArmL: [-118, 0, -58], forearmL: [-96, 0, 0] }),
     ],
   },
 
   /* ================= 腿 ================= */
   {
-    id: 'leg-press', day: 'leg', name: '腿举', en: 'LEG PRESS',
+    id: 'leg-press', day: 'leg', seq: 3, name: '腿举', en: 'LEG PRESS',
     muscles: ['quad', 'glute'], assist: '腘绳肌',
     sets: '3 × 10–12', rir: 'RIR 2–3', rest: '2–3 分钟',
     prop: 'none', bench: 'seat', ground: { by: 'pelvis', y: 0.6 },
-    cues: ['脚位中高，下到膝盖约 90°', '腰贴住靠垫，别拱起来', '不痛的范围就是你的范围'],
+    cues: ['脚位中高、略外八，背和臀贴紧靠垫', '下到膝盖约 90° 就停，臀一开始离垫就不要再低', '膝盖跟脚尖，顶端不锁死，不弹震'],
     cam: [2.6, 1.2, 1.3], target: [0, 0.75, 0.2],
     poses: [
       merge({ pelvis: [-64, 0, 0], pelvisPos: [0, -0.3, -0.06], torso: [-8, 0, 0] },
@@ -255,11 +267,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'rdl', day: 'leg', name: '罗马尼亚硬拉', en: 'ROMANIAN DEADLIFT',
+    id: 'rdl', day: 'leg', seq: 1, name: '罗马尼亚硬拉', en: 'ROMANIAN DEADLIFT',
     muscles: ['ham', 'glute'], assist: '竖脊肌、背阔肌',
     sets: '3 × 8–10', rir: 'RIR 2', rest: '2–3 分钟',
     prop: 'barbell', ground: { by: 'feet', y: 0.015 },
-    cues: ['髋往后推，像关门一样', '膝微屈但不继续弯', '杠贴着腿走，背全程平'],
+    cues: ['腿日第一个动作：膝微屈 15–20° 后整组固定', '髋往后推，杠贴腿下滑，下到膝盖下方、大腿后侧绷紧就停', '不追求小腿中段，背平直；下背先酸就是下太深'],
     cam: [2.4, 1.25, 1.75], target: [0, 0.82, 0],
     poses: [
       merge(STAND, { torso: [4, 0, 0], upperArmL: [-4, 0, -12], forearmL: [-6, 0, 0] },
@@ -269,11 +281,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'glute-bridge', day: 'leg', name: '臀桥 / 髋推', en: 'GLUTE BRIDGE',
+    id: 'glute-bridge', day: 'leg', seq: 2, name: '杠铃髋推', en: 'BARBELL HIP THRUST',
     muscles: ['glute', 'ham'], assist: '核心',
     sets: '3 × 10–12', rir: 'RIR 2', rest: '2 分钟',
     prop: 'none', floor: true,
-    cues: ['脚踩稳，顶髋不是顶腰', '顶端夹紧屁股停 1 秒', '肋骨别外翻，下巴微收'],
+    cues: ['上背靠在肩胛下沿，杠垫在大腿根，脚位以顶端小腿竖直为准', '推到肩—髋—膝一条线就停，不靠反弓腰顶更高', '2 秒放下，底部不弹；脚太远会抽筋，太近脚跟会抬'],
     cam: [2.5, 1.0, 1.5], target: [0, 0.4, 0],
     poses: [
       merge({ pelvis: [-90, 0, 0], pelvisPos: [0, -0.52, 0] },
@@ -285,11 +297,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'leg-curl', day: 'leg', name: '腿弯举', en: 'LEG CURL',
+    id: 'leg-curl', day: 'leg', seq: 4, name: '腿弯举', en: 'LEG CURL',
     muscles: ['ham'], assist: '腓肠肌',
     sets: '3 × 12–15', rir: 'RIR 1–2', rest: '60–90 秒',
     prop: 'none', floor: true, ground: { by: 'pelvis', y: 0.64 }, bench: true,
-    cues: ['俯卧，髋贴住垫子', '只动膝盖，屁股别抬', '下放慢，别让重量砸下来'],
+    cues: ['座椅调到膝盖与机器旋转点对齐', '滚垫压在跟腱上方，屁股不离座', '勾到最大停 1 秒，2–3 秒放回，不弹、不锁膝'],
     cam: [2.6, 1.0, 1.3], target: [0, 0.35, 0],
     poses: [
       merge({ pelvis: [88, 0, 0], pelvisPos: [0, -0.5, 0] },
@@ -301,11 +313,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'leg-extension', day: 'leg', name: '腿屈伸', en: 'LEG EXTENSION',
+    id: 'leg-extension', day: 'leg', seq: 5, name: '腿屈伸', en: 'LEG EXTENSION',
     muscles: ['quad'], assist: '—',
-    sets: '2–3 × 12–15', rir: 'RIR 1–2', rest: '60–90 秒',
+    sets: '2 × 12–15', rir: 'RIR 1–2', rest: '60–90 秒',
     prop: 'none', bench: 'seat', ground: { by: 'pelvis', y: 0.6 },
-    cues: ['90° → 30°，不锁死', '顶端停 1 秒再慢放', '痛就缩幅度，别硬顶'],
+    cues: ['先把膝盖对准机器旋转点', '只从 90° 踢到约 30°，不锁死', '这台机器对膝盖压力最大，痛就缩幅度、减重量'],
     cam: [2.4, 1.1, 1.6], target: [0, 0.6, 0.2],
     poses: [
       merge({ pelvis: [-4, 0, 0], pelvisPos: [0, -0.06, -0.02] },
@@ -317,11 +329,36 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'calf-raise', day: 'leg', name: '站姿提踵', en: 'STANDING CALF RAISE',
+    id: 'hip-abduction', day: 'leg', seq: 6, name: '髋外展', en: 'HIP ABDUCTION',
+    muscles: ['glute'], assist: '臀中肌',
+    sets: '2 × 15', rir: 'RIR 1–2', rest: '60 秒',
+    prop: 'none',
+    cues: ['座椅调到膝盖与机器枢轴对齐，背贴住', '用髋把腿打开到最大，停 1 秒，2–3 秒合回', '不后仰、不弹；没有机器就做弹力带侧步'],
+    cam: [2.2, 1.2, 1.8], target: [0, 0.7, 0],
+    poses: [
+      merge(STAND, { thighL: [-8, 0, -8], shinL: [8, 0, 0] }),
+      merge(STAND, { thighL: [-12, 0, -36], shinL: [8, 0, 0] }),
+    ],
+  },
+  {
+    id: 'copenhagen', day: 'leg', seq: 7, name: '哥本哈根侧平板', en: 'COPENHAGEN PLANK',
+    muscles: ['core'], assist: '内收肌、臀中肌',
+    sets: '2 × 15–20 秒 / 侧', rir: '—', rest: '60 秒',
+    prop: 'none',
+    cues: ['上侧腿踩凳，肘在肩正下方，身体成一条线', '用大腿内侧把髋撑住，下侧腿伸直上抬碰到凳底', '做不动就屈膝版或两膝夹球；别塌髋、别憋气'],
+    cam: [2.4, 1.2, 1.6], target: [0, 0.45, 0],
+    poses: [
+      merge({ pelvis: [-86, 0, -90], pelvisPos: [0, -0.5, 0], torso: [0, 0, -4] },
+        { upperArmL: [-96, 0, 0], forearmL: [-4, 0, 0] },
+        { thighL: [-4, 0, 0], shinL: [2, 0, 0] }),
+    ],
+  },
+  {
+    id: 'calf-raise', day: 'leg', seq: 8, name: '站姿提踵', en: 'STANDING CALF RAISE',
     muscles: ['calf'], assist: '—',
-    sets: '3–4 × 15–20', rir: 'RIR 1', rest: '60 秒',
+    sets: '3 × 15–20', rir: 'RIR 1', rest: '60 秒',
     prop: 'dumbbell',
-    cues: ['踮到最高停 1 秒', '下放到小腿拉长再起', '膝盖别弯，慢上慢下'],
+    cues: ['前脚掌踩边缘，脚跟悬空，膝微屈不锁死', '脚跟尽量下沉再踮到最高，顶端停 1 秒', '慢上慢下，不弹'],
     cam: [2.2, 1.1, 1.8], target: [0, 0.6, 0],
     poses: [
       merge(STAND, { upperArmL: [0, 0, -10], forearmL: [-10, 0, 0] },
@@ -333,11 +370,11 @@ export const EXERCISES = [
 
   /* ================= 手臂 + 核心 ================= */
   {
-    id: 'barbell-curl', day: 'arm', name: '杠铃弯举', en: 'BARBELL CURL',
+    id: 'barbell-curl', day: 'arm', seq: 1, name: '杠铃弯举', en: 'BARBELL CURL',
     muscles: ['bicep'], assist: '前臂',
     sets: '3 × 8–12', rir: 'RIR 1–2', rest: '90 秒',
     prop: 'barbell',
-    cues: ['肘夹在身体两侧，别往前送', '弯到顶停 1 秒，挤住二头', '下放 3 秒，别让重量掉下去'],
+    cues: ['肘留在肋骨旁，只动小臂', '弯到上胸、肩高就停，不用拉到下巴', '2–3 秒放回，手臂伸直再起，不后仰甩'],
     cam: [2.2, 1.35, 1.9], target: [0, 1.0, 0],
     poses: [
       merge(STAND, { upperArmL: [2, 0, -10], forearmL: [-6, 0, 0] }),
@@ -345,11 +382,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'tricep-pushdown', day: 'arm', name: '绳索下压', en: 'TRICEP PUSHDOWN',
+    id: 'tricep-pushdown', day: 'arm', seq: 2, name: '绳索下压', en: 'TRICEP PUSHDOWN',
     muscles: ['tricep'], assist: '—',
     sets: '3 × 10–12', rir: 'RIR 1–2', rest: '90 秒',
     prop: 'none',
-    cues: ['肘贴身体两侧，只动前臂', '到底时手臂完全伸直、外旋', '身体别前倾去压重量'],
+    cues: ['肘夹在身体两侧固定，手腕不勾', '压到手臂伸直但不锁死，停 1 秒', '2–3 秒回到小臂与地面平行，不靠体重压'],
     cam: [2.2, 1.3, 1.9], target: [0, 1.0, 0],
     poses: [
       merge(STAND, { torso: [6, 0, 0], upperArmL: [2, 0, -12], forearmL: [-92, 0, 0] }),
@@ -357,11 +394,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'hammer-curl', day: 'arm', name: '锤式弯举', en: 'HAMMER CURL',
+    id: 'hammer-curl', day: 'arm', seq: 3, name: '锤式弯举', en: 'HAMMER CURL',
     muscles: ['bicep', 'forearm'], assist: '肱肌',
     sets: '3 × 10–12', rir: 'RIR 1', rest: '60–90 秒',
     prop: 'dumbbell',
-    cues: ['掌心相对，像拿锤子', '肘不动，只弯前臂', '两边交替或同时都行'],
+    cues: ['掌心相对，手腕直立不弯', '肘贴身不动，弯到前臂接近垂直', '2–3 秒放回，手臂伸直，不甩身体'],
     cam: [2.2, 1.35, 1.9], target: [0, 1.0, 0],
     poses: [
       merge(STAND, { upperArmL: [2, 0, -8], forearmL: [-6, 0, 0], handL: [0, 90, 0] }),
@@ -369,11 +406,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'overhead-extension', day: 'arm', name: '过顶臂屈伸', en: 'OVERHEAD EXTENSION',
+    id: 'overhead-extension', day: 'arm', seq: 4, name: '过顶臂屈伸', en: 'OVERHEAD EXTENSION',
     muscles: ['tricep'], assist: '—',
     sets: '3 × 10–12', rir: 'RIR 1', rest: '60–90 秒',
     prop: 'dumbbell',
-    cues: ['大臂贴近耳侧，别往外张', '只动肘，下放到头后', '肋骨收紧，别塌腰'],
+    cues: ['肘朝前、贴近耳朵，上臂垂直不动', '小臂放到头后有拉伸就停，不锁肘', '腰不拱，下巴不低到胸口'],
     cam: [2.2, 1.5, 1.9], target: [0, 1.25, 0],
     poses: [
       merge(STAND, { upperArmL: [-168, 0, -14], forearmL: [-108, 0, 0] }),
@@ -381,25 +418,41 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'wrist-curl', day: 'arm', name: '腕弯举', en: 'WRIST CURL',
-    muscles: ['forearm'], assist: '—',
-    sets: '2 × 15', rir: 'RIR 1', rest: '60 秒',
-    prop: 'barbell', bench: 'seat', ground: { by: 'pelvis', y: 0.62 },
-    cues: ['前臂贴住大腿或凳面', '只动手腕，幅度小但要满', '小重量，别借力'],
-    cam: [2.0, 1.1, 1.8], target: [0, 0.75, 0.1],
+    id: 'arm-row', day: 'arm', seq: 5, media: 'chest-supported-row', name: '斜凳胸托哑铃划船', en: 'CHEST-SUPPORTED ROW',
+    muscles: ['lat', 'trap'], assist: '菱形肌、肱二头',
+    sets: '2 × 10–12', rir: 'RIR 2', rest: '90 秒',
+    prop: 'dumbbell', bench: 'incline', ground: { by: 'feet', y: 0.015 },
+    cues: ['胸口贴住 30–45° 上斜凳，腰不吃力', '手心相对，肘贴身拉到下肋旁，停 1 秒', '这是背部的第二次刺激，不耸肩、不转体'],
+    cam: [2.2, 1.5, 1.9], target: [0, 0.95, 0],
     poses: [
-      merge({ torso: [10, 0, 0] }, { upperArmL: [-34, 0, -16], forearmL: [-78, 0, 0], handL: [-40, 0, 0] },
-        { thighL: [-90, 0, -8], shinL: [88, 0, 0] }),
-      merge({ torso: [10, 0, 0] }, { upperArmL: [-34, 0, -16], forearmL: [-78, 0, 0], handL: [34, 0, 0] },
-        { thighL: [-90, 0, -8], shinL: [88, 0, 0] }),
+      merge({ pelvis: [-52, 0, 0], pelvisPos: [0, -0.32, -0.04], torso: [-6, 0, 0] },
+        { upperArmL: [-92, 0, -12], forearmL: [-16, 0, 0] },
+        { thighL: [-20, 0, -8], shinL: [60, 0, 0], footL: [6, 0, 0] }),
+      merge({ pelvis: [-52, 0, 0], pelvisPos: [0, -0.32, -0.04], torso: [-6, 0, 0] },
+        { upperArmL: [-34, 0, -18], forearmL: [-104, 0, 0] },
+        { thighL: [-20, 0, -8], shinL: [60, 0, 0], footL: [6, 0, 0] }),
     ],
   },
   {
-    id: 'hanging-leg-raise', day: 'arm', name: '悬垂举腿', en: 'HANGING LEG RAISE',
+    id: 'cable-crunch', day: 'arm', seq: 6, media: 'cable-crunch', name: '绳索跪姿卷腹', en: 'KNEELING CABLE CRUNCH',
+    muscles: ['abs', 'core'], assist: '—',
+    sets: '3 × 10–15', rir: 'RIR 1–2', rest: '60–90 秒',
+    prop: 'none',
+    cues: ['背对龙门架跪下，绳把握在头后，髋固定', '用腹肌把肋骨往骨盆卷，肘往大腿靠', '卷到底停 1 秒，2–3 秒打开，不用手臂拉'],
+    cam: [2.4, 1.2, 2.0], target: [0, 0.8, 0],
+    poses: [
+      merge({ torso: [18, 0, 0] }, { upperArmL: [-120, 0, -10], forearmL: [-80, 0, 0] },
+        { thighL: [-84, 0, -8], shinL: [92, 0, 0] }),
+      merge({ torso: [42, 0, 0] }, { upperArmL: [-104, 0, -10], forearmL: [-96, 0, 0] },
+        { thighL: [-84, 0, -8], shinL: [92, 0, 0] }),
+    ],
+  },
+  {
+    id: 'hanging-leg-raise', day: 'arm', seq: 7, name: '负重悬垂举腿', en: 'HANGING LEG RAISE',
     muscles: ['abs', 'core'], assist: '髂腰肌、前臂',
-    sets: '2 × 10–15', rir: 'RIR 1', rest: '60 秒',
+    sets: '3 × 10–15', rir: 'RIR 1', rest: '60–90 秒',
     prop: 'bar', ground: { by: 'pelvis', y: 1.13 },
-    cues: ['身体别晃，先稳住再抬', '用腹肌卷，不只是抬腿', '腿放下时慢，别甩'],
+    cues: ['肩胛微收，不耸肩，身体先稳住', '用下腹把膝提到与地面平行或更高', '慢放 3 秒，不荡、不靠后仰'],
     cam: [3.4, 1.7, 3.4], target: [0, 1.1, 0],
     poses: [
       merge({ upperArmL: [-172, 0, -10], forearmL: [-6, 0, 0], torso: [2, 0, 0] },
@@ -409,11 +462,23 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'dead-bug', day: 'arm', name: '死虫', en: 'DEAD BUG',
+    id: 'side-bend', day: 'arm', seq: 8, name: '负重侧屈', en: 'WEIGHTED SIDE BEND',
+    muscles: ['core'], assist: '腹斜肌',
+    sets: '2 × 12–15 / 侧', rir: 'RIR 1', rest: '60 秒',
+    prop: 'dumbbell',
+    cues: ['单手拎哑铃，另一手扶头或叉腰', '只往哑铃侧弯，骨盆朝前不转', '用对侧腹斜肌拉回，不甩、不提'],
+    cam: [2.2, 1.2, 2.0], target: [0, 1.0, 0],
+    poses: [
+      merge(STAND, { upperArmL: [0, 0, -10], forearmL: [-6, 0, 0] }),
+      merge(STAND, { torso: [0, 0, -18], upperArmL: [0, 0, -10], forearmL: [-6, 0, 0] }),
+    ],
+  },
+  {
+    id: 'dead-bug', day: 'arm', seq: 9, name: '死虫', en: 'DEAD BUG',
     muscles: ['core', 'abs'], assist: '—',
     sets: '2 × 8–10 / 侧', rir: '—', rest: '60 秒',
     prop: 'none', floor: true, ground: { by: 'pelvis', y: 0.16 },
-    cues: ['腰贴地，全程别拱', '对侧手脚一起伸，慢', '呼气伸出，吸气收回'],
+    cues: ['下背贴地，肚脐往脊柱收', '对侧手脚一起伸，接近地面但不碰', '腰一离地就缩短幅度、放慢'],
     cam: [2.6, 1.1, 1.5], target: [0, 0.35, 0],
     poses: [
       merge({ pelvis: [-90, 0, 0], pelvisPos: [0, -0.55, 0] },
@@ -429,11 +494,11 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'side-plank', day: 'arm', name: '侧平板', en: 'SIDE PLANK',
+    id: 'side-plank', day: 'arm', seq: 10, name: '侧平板', en: 'SIDE PLANK',
     muscles: ['core'], assist: '腹斜肌、臀中肌',
     sets: '2 × 30 秒 / 侧', rir: '—', rest: '60 秒',
     prop: 'none', floor: true, ground: { by: 'pelvis', y: 0.24 },
-    cues: ['身体一条直线，屁股别掉', '肘在肩正下方', '撑不住就跪姿，别塌腰'],
+    cues: ['肘在肩正下方，双腿伸直叠放', '髋抬到从头到脚一条线，不塌不撅', '撑不住就膝盖着地；负重侧屈抢不到位置时用它练侧腹'],
     cam: [2.4, 1.2, 1.6], target: [0, 0.45, 0],
     poses: [
       merge({ pelvis: [-86, 0, -90], pelvisPos: [0, -0.5, 0], torso: [0, 0, -4] },
@@ -445,5 +510,6 @@ export const EXERCISES = [
   },
 ]
 
-export const byDay = (dayId) => EXERCISES.filter((e) => e.day === dayId)
+export const byDay = (dayId) =>
+  EXERCISES.filter((e) => e.day === dayId).sort((a, b) => (a.seq ?? 99) - (b.seq ?? 99))
 export const byId = (id) => EXERCISES.find((e) => e.id === id)
