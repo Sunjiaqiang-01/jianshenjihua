@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { createFigure, lerpPose, easeInOut } from './rig'
 
 /* ---------- 器械 ---------- */
@@ -124,17 +125,25 @@ export function createViewer(container, opts = {}) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setSize(W(), H())
   renderer.shadowMap.enabled = true
-  renderer.shadowMap.type = THREE.PCFShadowMap
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.outputColorSpace = THREE.SRGBColorSpace
+  renderer.toneMapping = THREE.ACESFilmicToneMapping
+  renderer.toneMappingExposure = 1.06
   container.appendChild(renderer.domElement)
 
   const camera = new THREE.PerspectiveCamera(34, W() / H(), 0.1, 100)
 
+  /* 环境反射：让金属器械和皮肤都有真实的高光过渡 */
+  const pmrem = new THREE.PMREMGenerator(renderer)
+  const envTex = pmrem.fromScene(new RoomEnvironment(), 0.06).texture
+  scene.environment = envTex
+  scene.environmentIntensity = 0.42
+
   /* lights */
-  const hemi = new THREE.HemisphereLight(0xdfe7ff, 0x14161a, 1.15)
+  const hemi = new THREE.HemisphereLight(0xdfe7ff, 0x14161a, 0.85)
   scene.add(hemi)
 
-  const key = new THREE.DirectionalLight(0xffffff, 2.4)
+  const key = new THREE.DirectionalLight(0xffffff, 2.9)
   key.position.set(2.6, 4.2, 3.4)
   key.castShadow = true
   key.shadow.mapSize.set(1024, 1024)
@@ -147,13 +156,18 @@ export function createViewer(container, opts = {}) {
   key.shadow.bias = -0.0012
   scene.add(key)
 
-  const rim = new THREE.DirectionalLight(0xc6ff3d, 1.5)
+  const rim = new THREE.DirectionalLight(0xc6ff3d, 1.9)
   rim.position.set(-3.2, 1.6, -2.8)
   scene.add(rim)
 
-  const fill = new THREE.DirectionalLight(0x7cd4ff, 0.55)
+  const fill = new THREE.DirectionalLight(0x7cd4ff, 0.62)
   fill.position.set(-1.5, 2.2, 3.0)
   scene.add(fill)
+
+  // 底部补光：托起暗部,让肌肉轮廓不发黑
+  const bounce = new THREE.DirectionalLight(0xffe9d0, 0.35)
+  bounce.position.set(0.8, -1.6, 1.6)
+  scene.add(bounce)
 
   /* floor: radial shadow catcher */
   const shadowTex = (() => {
@@ -449,6 +463,8 @@ export function createViewer(container, opts = {}) {
       el.removeEventListener('touchend', onUp)
       clearProps()
       figure.dispose()
+      envTex.dispose()
+      pmrem.dispose()
       renderer.dispose()
       if (el.parentElement) el.parentElement.removeChild(el)
     },
