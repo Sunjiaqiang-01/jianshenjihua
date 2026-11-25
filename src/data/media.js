@@ -1,16 +1,13 @@
 /**
- * 动作演示素材 —— 全站统一一套：SmartWorkout 的 3D 解剖示范。
- *
- * 来源：smartworkout.app 健身练习库
- * 内容：同一个 3D 人体模型、同样的深色背景、6 秒循环；
- *       目标肌群在动作中实时红色高亮，跟右侧肌肉图一一对应。
- * 处理：原片 1920×1080 → 本地转码 1280×720（约 110KB/个），另存首帧做封面。
+ * 动作素材：知识库 SmartWorkout 动作库的循环短片，6 秒一圈，深底、同一具人体模型，
+ * 目标肌群在动作里自身高亮。每段 77–117KB，另存首帧做封面。
+ * 文件名就是动作 id；少数动作用 media 字段指到同一段。
  */
+export function mediaKey(exercise) {
+  return typeof exercise === 'string' ? exercise : (exercise.media || exercise.id)
+}
 
-export function demoFor(exercise) {
-  const id = typeof exercise === 'string' ? exercise : (exercise.media || exercise.id)
-  return {
-    video: `/media/sw/${id}.mp4`,
-    poster: `/media/sw/${id}.jpg`,
-  }
+export function videoFor(exercise) {
+  const key = mediaKey(exercise)
+  return { video: `/media/sw/${key}.mp4`, poster: `/media/sw/${key}.jpg` }
 }

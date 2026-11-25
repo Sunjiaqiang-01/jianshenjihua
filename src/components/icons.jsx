@@ -21,20 +21,4 @@ export const Icon = {
       <path d="M17 4h3l-3 3h3" strokeWidth="1.3" />
     </svg>
   ),
-  play: (p) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M8 5.2v13.6c0 .8.9 1.3 1.6.9l10-6.8a1 1 0 0 0 0-1.8l-10-6.8A1 1 0 0 0 8 5.2z" /></svg>
-  ),
-  pause: (p) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...p}><rect x="6.5" y="4.5" width="3.6" height="15" rx="1.2" /><rect x="13.9" y="4.5" width="3.6" height="15" rx="1.2" /></svg>
-  ),
-  reset: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="M3 11a9 9 0 1 1 2.6 7" /><path d="M3 5v6h6" />
-    </svg>
-  ),
-  arrow: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="M5 12h13M13 6l6 6-6 6" />
-    </svg>
-  ),
 }
